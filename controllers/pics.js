@@ -10,7 +10,9 @@ export const scrapePics = async () => {
   const downloadPics = await downloadPicsFS();
   console.log(downloadPics);
 
-  const uploadPics = await uploadPicsFS();
+  //post to id not necessary but included
+  const postToId = CONFIG.articleSendToId;
+  const uploadPics = await uploadPicsFS(postToId);
   console.log(uploadPics);
 
   return newPicUrls;
@@ -109,7 +111,7 @@ export const downloadPicsFS = async () => {
   }
 };
 
-export const uploadPicsFS = async () => {
+export const uploadPicsFS = async (postToId = CONFIG.articleSendToId) => {
   const picArray = await getPicArray("picsToUpload");
   console.log(picArray);
 
@@ -117,7 +119,7 @@ export const uploadPicsFS = async () => {
     try {
       const pic = picArray[i];
       const params = {
-        chatId: CONFIG.articleSendToId,
+        chatId: postToId,
         picPath: pic.picPath,
       };
 

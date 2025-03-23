@@ -2,7 +2,8 @@ import dbModel from "../models/db.js";
 import CONFIG from "../config/scrape-config.js";
 import { sendMessageChunkTG } from "./tg-api.js";
 
-export const postArticlesLoop = async () => {
+//default post to
+export const postArticlesLoop = async (postToId = CONFIG.articleSendToId) => {
   //check if any new articles
   const articleObj = {
     collection1: CONFIG.articleContentCollection,
@@ -20,6 +21,9 @@ export const postArticlesLoop = async () => {
       //normalize data and post
       const articleObj = articleArray[i];
       const normalObj = await normalizeInputsTG(articleObj);
+
+      //add post to to object
+      normalObj.postToId = postToId;
       const sendMessageData = await handleSendMessage(normalObj);
       console.log(sendMessageData);
 
@@ -54,14 +58,14 @@ const normalizeInputsTG = async (inputObj) => {
 
 //chunk content logic if too long
 const handleSendMessage = async (inputObj) => {
-  const { url, date, title, content } = inputObj; //destructure everything
+  const { url, date, title, content, postToId } = inputObj; //destructure everything
   const maxLength = CONFIG.tgMaxLength - title.length - date.length - url.length - 100;
   const chunkTotal = Math.ceil(content.length / maxLength);
   let chunkCount = 0;
 
   //set  base params
   const params = {
-    chat_id: CONFIG.articleSendToId,
+    chat_id: postToId,
     parse_mode: "HTML",
   };
 

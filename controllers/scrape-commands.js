@@ -8,15 +8,27 @@ export const runScrapeBoth = async () => {
 };
 
 export const runScrapePics = async (inputParams) => {
+  const { howMany, scrapeTo, tgId } = inputParams;
   await runGetNewData(inputParams);
-  // const { howMany, scrapeTo, pullNew } = inputParams;
 
-  // //pull new data if set
-  // if (pullNew === "yesNewData") await runGetNewData(inputParams);
+  const modelObj = {
+    keyToLookup: "kcnaId",
+    howMany: howMany,
+  };
 
-  // //pull lastet downloaded from db
-  // return "FUCK YOU FAGGOT";
-  console.log("FUCK YOU FAGGOT");
+  const dataModel = new dbModel(modelObj, CONFIG.downloadedCollection);
+  const picDataArray = await dataModel.getLastItemsArray();
+
+  //add check for sending to tg
+  if (scrapeTo === "displayTG") {
+    //send anything new to tg
+    const tgData = await uploadPicsFS(tgId);
+    console.log(tgData);
+    return "DATA POSTED TO TG";
+  }
+
+  //otherwise return picDataArray
+  return picDataArray;
 };
 
 export const runScrapeArticles = async (inputParams) => {
@@ -29,13 +41,19 @@ export const runScrapeArticles = async (inputParams) => {
     keyToLookup: "myId",
     howMany: howMany,
   };
+
   const dataModel = new dbModel(modelObj, CONFIG.articleContentCollection);
   const articleDataArray = await dataModel.getLastItemsArray();
 
   //add check for sending to tg instead
+  if (scrapeTo === "displayTG") {
+    //send anything new to tg
+    const tgData = await postArticlesLoop(tgId);
+    console.log(tgData);
+    return "DATA POSTED TO TG";
+  }
 
-
-  //process on frontend
+  //otherwise process on frontend
   return articleDataArray;
 };
 
