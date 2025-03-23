@@ -1,6 +1,6 @@
 import CONFIG from "../config/scrape-config.js";
 import { runScrapeBoth, runScrapePics, runScrapeArticles, runScrapeURL } from "./scrape-commands.js";
-import {runRestartAutoScraper} from "./scraper-run.js"
+import { runRestartAutoScraper } from "./scraper-run.js";
 
 export const parseCommand = async (req, res) => {
   const inputParams = await setInputParamsDefaults(req.body);

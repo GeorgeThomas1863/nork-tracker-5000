@@ -1,6 +1,7 @@
 import { scrapeArticles } from "./articles-get.js";
 import { postArticlesLoop } from "./articles-post.js";
 import { scrapePics } from "./pics.js";
+import { scrapeKCNA } from "./scrape-main.js";
 
 export const runRestartAutoScraper = async (inputParams) => {
   //MAKE WAY TO HANDLE SETTING TG ID
