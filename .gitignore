@@ -1,0 +1,21 @@
+# Ignore config folder
+config/
+/config*
+.env
+.env.*
+
+#bots
+tg-bot.js
+scrape-config.js
+
+# Dependency directories
+node_modules/
+package-lock.json
+
+# Logs
+logs
+*.log
+npm-debug.log*
+
+# IDE specific files
+.vscode/

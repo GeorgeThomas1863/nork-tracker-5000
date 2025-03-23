@@ -1,0 +1,40 @@
+<ul id="scraper-wrapper">
+  <li id="scrapeType-list-item">
+    <label for="scrapeType">Scrape Type</label>
+    <select name="scrapeType" id="scrapeType">
+      <option value="scrapeBoth" id="scrapeBoth" selected>Articles and Pics</option>
+      <option value="scrapePics" id="scrapePics">Just Pics</option>
+      <option value="scrapeArticles" id="scrapeArticles">Just Articles</option>
+      <option value="scrapeURL" id="scrapeURL">Specific URL</option>
+      <option value="restartAuto" id="restartAuto">Restart Auto Scraper</option>
+    </select>
+  </li>
+  <li id="urlInput-list-item" class="hidden">
+    <label for="urlInput">URL</label>
+    <input type="text" name="urlInput" id="urlInput" />
+  </li>
+  <li id="howMany-list-item">
+    <label for="howMany">How Many?</label>
+    <input type="text" name="howMany" id="howMany" placeholder="[Starts with most recent]" />
+  </li>
+  <li id="newData-list-item">
+    <label for="pullNewData">Scrape New?</label>
+    <select name="pullNewData" id="pullNewData">
+      <option value="" disabled selected>[Will take few min if yes]</option>
+      <option value="noNewData" id="noNewData">No</option>
+      <option value="yesNewData" id="yesNewData">Yes</option>
+    </select>
+  </li>
+  <li id="scrapeTo-list-item">
+    <label for="scrapeTo">Where to?</label>
+    <select name="scrapeTo" id="scrapeTo">
+      <option value="displayHere" id="displayHere" selected>Here [display below]</option>
+      <option value="displayTG" id="displayTG">Telegram</option>
+    </select>
+  </li>
+  <li id="tgId-list-item" class="hidden">
+    <label for="tgId">TG Chat ID</label>
+    <input type="text" name="tgId" id="tgId" />
+  </li>
+</ul>
+<button id="submit-button">Submit</button>
