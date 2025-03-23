@@ -38,7 +38,6 @@ const scrapeSubmit = async (e) => {
 
   //display data
   await displayDataReturn(data);
-  //   d.updateIdElement.value = "";
 };
 
 //action button display

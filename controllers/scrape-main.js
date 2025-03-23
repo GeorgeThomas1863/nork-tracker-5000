@@ -31,6 +31,7 @@ export const scrapeKCNA = async () => {
   await scrapeArticles();
   await postArticlesLoop();
   await scrapePics();
+  console.log("FINISHED SCRAPE")
 };
 
 // //PASS IN FUNCTION AS PARAM TO EXECUTE HOURLY

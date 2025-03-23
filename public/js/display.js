@@ -1,6 +1,21 @@
 import d from "./define-things.js";
 import { parseArticleReturn } from "./parse-return.js";
 
+//HIDE ARRAY
+const hideArray = async (inputs) => {
+  for (const input of inputs) {
+    input.classList.add("hidden");
+  }
+};
+
+//UNHIDE ARRAY
+const unhideArray = async (inputs) => {
+  for (const input of inputs) {
+    input.classList.remove("hidden");
+    // input.classList.remove("#fuck-forms li.hidden");
+  }
+};
+
 export const runActionButtonDisplay = async (buttonClicked) => {
   //adult way with switch case
   switch (buttonClicked) {
@@ -54,27 +69,21 @@ export const runScrapeToDisplay = async (buttonClicked) => {
   }
 };
 
-//HIDE ARRAY
-const hideArray = async (inputs) => {
-  for (const input of inputs) {
-    input.classList.add("hidden");
-  }
-};
-
-//UNHIDE ARRAY
-const unhideArray = async (inputs) => {
-  for (const input of inputs) {
-    input.classList.remove("hidden");
-    // input.classList.remove("#fuck-forms li.hidden");
-  }
-};
 
 //parses json array
 export const displayDataReturn = async (inputData) => {
+  console.log(inputData);
+  console.dir(inputData)
   //add error checks  //BUILD error display
+  if (inputData.empty && inputData.empty === "YES") {
+    d.dataReturnElement.textContent = "NO DATA STORED, please resubmit and set Scrape New to YES.";
+    d.dataReturnWrapper.classList.remove("hidden");
+    return;
+  }
+
   if (inputData === null || inputData.length === 0) {
     console.log("RETURN FUCKED");
-    d.dataReturnElement.textContent("DATA RETURN ERROR");
+    d.dataReturnElement.textContent = "DATA RETURN ERROR";
     d.dataReturnWrapper.classList.remove("hidden");
     return;
   }

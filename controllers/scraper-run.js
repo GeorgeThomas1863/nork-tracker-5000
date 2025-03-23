@@ -2,8 +2,11 @@ import { scrapeArticles } from "./articles-get.js";
 import { postArticlesLoop } from "./articles-post.js";
 import { scrapePics } from "./pics.js";
 
-export const runRestartAutoScraper = async () => {
-  console.log("BUILD");
+export const runRestartAutoScraper = async (inputParams) => {
+  //MAKE WAY TO HANDLE SETTING TG ID
+
+  const data = await scrapeKCNA();
+  return data;
 };
 
 //just run once

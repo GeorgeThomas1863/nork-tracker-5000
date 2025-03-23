@@ -24,8 +24,14 @@ export const runScrapePics = async (inputParams) => {
     //send anything new to tg
     const tgData = await uploadPicsFS(tgId);
     console.log(tgData);
-    return "DATA POSTED TO TG";
+    return { data: "DATA POSTED TO TG" };
   }
+
+    //if empty
+    if (picDataArray.length === 0) {
+      picDataArray.empty = "YES"
+      return picDataArray;
+    }
 
   //otherwise return picDataArray
   return picDataArray;
@@ -51,6 +57,13 @@ export const runScrapeArticles = async (inputParams) => {
     const tgData = await postArticlesLoop(tgId);
     console.log(tgData);
     return "DATA POSTED TO TG";
+  }
+
+  //if empty
+  if (articleDataArray.length === 0) {
+    articleDataArray.empty = "YES";
+    console.log(articleDataArray);
+    return articleDataArray;
   }
 
   //otherwise process on frontend
