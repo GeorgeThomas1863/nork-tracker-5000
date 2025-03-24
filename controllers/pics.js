@@ -23,6 +23,9 @@ export const getPicURLs = async () => {
   const dateArray = await getDateArray();
   const currentKcnaId = await getCurrentKcnaId();
 
+  console.log("HERE CURRENT KCNA ID");
+  console.log(currentKcnaId);
+
   //loop 200 (400 lookups an hour)
   const startId = currentKcnaId - 100;
   const stopId = currentKcnaId + 100;
@@ -201,10 +204,10 @@ const getPicArray = async (type) => {
 const getCurrentKcnaId = async () => {
   const dataModel = new dbModel({ keyToLookup: "kcnaId" }, CONFIG.picCollection);
   const maxId = await dataModel.findMaxId();
+
   //no id on first lookup
-  if (!maxId) return CONFIG.currentId;
+  if (!maxId || CONFIG.currentId > maxId) return CONFIG.currentId;
 
   //otherwise calculate it
-  const currentKcnaId = Math.max(maxId, CONFIG.currentId);
-  return currentKcnaId;
+  return maxId;
 };

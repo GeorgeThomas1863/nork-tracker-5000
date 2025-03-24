@@ -1,5 +1,5 @@
 import d from "./define-things.js";
-import { parseArticleReturn } from "./parse-return.js";
+import { parseArticleReturn, parsePicsReturn } from "./parse-return.js";
 
 //HIDE ARRAY
 const hideArray = async (inputs) => {
@@ -69,12 +69,10 @@ export const runScrapeToDisplay = async (buttonClicked) => {
   }
 };
 
-
 //parses json array
 export const displayDataReturn = async (inputData) => {
-  console.log(inputData);
-  console.dir(inputData)
-  //add error checks  //BUILD error display
+  const { dataArray, dataType } = inputData;
+  //TO DO: UNFUCK ERROR CHECK
   if (inputData.empty && inputData.empty === "YES") {
     d.dataReturnElement.textContent = "NO DATA STORED, please resubmit and set Scrape New to YES.";
     d.dataReturnWrapper.classList.remove("hidden");
@@ -88,8 +86,19 @@ export const displayDataReturn = async (inputData) => {
     return;
   }
 
-  //othwise parse and display data
-  await parseArticleReturn(inputData);
+  console.log("DATA DISPLAY");
+  console.dir(inputData);
+
+  //MAYBE use switch for below
+  //for articles
+  if (dataType === d.scrapeArticles.id) {
+    await parseArticleReturn(dataArray);
+  }
+
+  if (dataType === d.scrapePics.id) {
+    await parsePicsReturn(dataArray);
+  }
+
   d.dataReturnWrapper.classList.remove("hidden");
   console.log("DATA DISPLAYED");
   return;

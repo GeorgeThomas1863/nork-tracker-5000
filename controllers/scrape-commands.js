@@ -8,7 +8,7 @@ export const runScrapeBoth = async () => {
 };
 
 export const runScrapePics = async (inputParams) => {
-  const { howMany, scrapeTo, tgId } = inputParams;
+  const { scrapeType, howMany, scrapeTo, tgId } = inputParams;
   await runGetNewData(inputParams);
 
   const modelObj = {
@@ -19,6 +19,11 @@ export const runScrapePics = async (inputParams) => {
   const dataModel = new dbModel(modelObj, CONFIG.downloadedCollection);
   const picDataArray = await dataModel.getLastItemsArray();
 
+  const returnObj = {
+    dataArray: picDataArray,
+    dataType: scrapeType,
+  };
+
   //add check for sending to tg
   if (scrapeTo === "displayTG") {
     //send anything new to tg
@@ -27,18 +32,18 @@ export const runScrapePics = async (inputParams) => {
     return { data: "DATA POSTED TO TG" };
   }
 
-    //if empty
-    if (picDataArray.length === 0) {
-      picDataArray.empty = "YES"
-      return picDataArray;
-    }
+  //if empty //UNFUCK
+  if (picDataArray.length === 0) {
+    picDataArray.empty = "YES";
+    return picDataArray;
+  }
 
-  //otherwise return picDataArray
-  return picDataArray;
+  //otherwise return obj
+  return returnObj;
 };
 
 export const runScrapeArticles = async (inputParams) => {
-  const { howMany, scrapeTo, tgId } = inputParams;
+  const { scrapeType, howMany, scrapeTo, tgId } = inputParams;
   //returns null if set to no new data
   await runGetNewData(inputParams);
 
@@ -51,6 +56,12 @@ export const runScrapeArticles = async (inputParams) => {
   const dataModel = new dbModel(modelObj, CONFIG.articleContentCollection);
   const articleDataArray = await dataModel.getLastItemsArray();
 
+  const returnObj = {
+    dataArray: articleDataArray,
+    dataType: scrapeType,
+  };
+
+
   //add check for sending to tg instead
   if (scrapeTo === "displayTG") {
     //send anything new to tg
@@ -59,15 +70,15 @@ export const runScrapeArticles = async (inputParams) => {
     return "DATA POSTED TO TG";
   }
 
-  //if empty
+  //if empty //UNFUCK
   if (articleDataArray.length === 0) {
     articleDataArray.empty = "YES";
     console.log(articleDataArray);
     return articleDataArray;
   }
 
-  //otherwise process on frontend
-  return articleDataArray;
+  //otherwise return obj and process on frontend
+  return returnObj;
 };
 
 export const runScrapeURL = async () => {

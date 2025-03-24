@@ -56,3 +56,41 @@ export const parseArticleReturn = async (inputData) => {
   // Add all articles to the return element
   d.dataReturnElement.appendChild(articleList);
 };
+
+export const parsePicsReturn = async (inputData) => {
+  const picList = document.createElement("ul");
+  picList.className = "pic-list";
+
+  console.log("INPUT DATA");
+  console.dir(inputData);
+
+  //loop through return array of OBJECTS
+  for (const pic of inputData) {
+    //extract url for pic
+    const fileNameRaw = pic.picPath;
+    const fileName = fileNameRaw.split("/").pop();
+    const picPath = "/kcna-pics/" + fileName;
+
+    console.log("PIC PATH");
+    console.log(picPath);
+
+    const picItem = document.createElement("li");
+    picItem.className = "pic-list-item";
+
+    // Create pic element
+    const picElement = document.createElement("img");
+    picElement.src = picPath;
+    picElement.className = "pic-item";
+
+    picItem.appendChild(picElement);
+    picList.appendChild(picItem);
+  }
+
+  // Clear previous content if any
+  if (d.dataReturnElement.firstChild) {
+    d.dataReturnElement.innerHTML = "";
+  }
+
+  // Add all articles to the return element
+  d.dataReturnElement.appendChild(picList);
+};

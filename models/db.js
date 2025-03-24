@@ -63,14 +63,17 @@ class dbModel {
       .collection(this.collection)
       .find()
       .sort({ [keyToLookup]: -1 })
-      .limit(1);
-    return +dataObj[keyToLookup];
+      .limit(1).toArray();
+
+    console.log("DATA OBJ");
+    console.log(dataObj[0]);
+    return +dataObj[0][keyToLookup];
   }
 
   async getLastItemsArray() {
     const keyToLookup = this.dataObject.keyToLookup;
     const howMany = +this.dataObject.howMany;
-    console.log(howMany)
+    console.log(howMany);
     const dataArray = await db
       .dbGet()
       .collection(this.collection)
