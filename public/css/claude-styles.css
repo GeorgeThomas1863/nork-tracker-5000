@@ -2,7 +2,7 @@
 .article-list {
   list-style: none;
   padding: 0;
-  margin: 2rem 0;
+  margin: 0;
   display: flex;
   flex-direction: column;
   gap: 3rem; /* Significant spacing between articles */
@@ -24,12 +24,14 @@
   overflow: hidden;
   position: relative;
   border-left: 4px solid #2c3e50;
+  border-right: 4px solid #2c3e50;
 }
 
-/* .article-item:hover {
+.article-item:hover {
   transform: translateY(-5px);
   box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
-} */
+  /* transform: scale(1.05); */
+}
 
 /* Article Title */
 .article-title {
@@ -199,11 +201,11 @@
     }
   } */
 
-  /* -------------------
+/* -------------------
 
   FOR PICS */
 
-  /* Reset styles for the list */
+/* Reset styles for the list */
 .pic-list {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -212,7 +214,7 @@
   margin: 0;
   list-style: none;
   width: 100%;
-  max-width: 1200px;
+  /* max-width: 1200px; */
   margin: 0 auto;
 }
 
@@ -223,7 +225,7 @@
   border-radius: 8px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
-  aspect-ratio: 4/3;
+  /* aspect-ratio: 4/3; */
   background-color: #f5f5f5;
 }
 
@@ -242,7 +244,7 @@
 }
 
 .pic-list-item:hover .pic-item {
-  transform: scale(1.05);
+  transform: scale(1.2);
 }
 
 /* Responsive adjustments FOR PICS */
@@ -267,15 +269,21 @@
 } */
 
 /* Optional loading state */
-.pic-list-item.loading {
-  animation: pulse 1.5s infinite;
+/* .pic-list-item.loading {
+  animation: pulse 5s infinite;
 }
 
 @keyframes pulse {
-  0% { opacity: 0.6; }
-  50% { opacity: 0.9; }
-  100% { opacity: 0.6; }
-}
+  0% {
+    opacity: 0.6;
+  }
+  50% {
+    opacity: 0.9;
+  }
+  100% {
+    opacity: 0.6;
+  }
+} */
 
 /* Optional caption functionality (if you want to add captions later) */
 .pic-caption {
