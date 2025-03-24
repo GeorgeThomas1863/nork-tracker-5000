@@ -1,5 +1,6 @@
 # Ignore config folder
 config/
+/config/
 /config*
 .env
 .env.*
