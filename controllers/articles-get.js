@@ -12,9 +12,17 @@ export const scrapeArticles = async () => {
   if (articlesArray.length === 0) return null; //no new articles
 
   //otherwise store articles and get article data; DEFAULT keep logging on
-  const storeData = await storeArticleArray(articlesArray);
+  await storeArticleArray(articlesArray);
   // console.log(storeData);
   const articleData = await getArticleData(articlesArray);
+
+  //if article has pics, SCRAPE THEM HERE, RETURN as an array
+  if (articleData && articleData.picURL){
+    await getArticlePics(articleData.picURL)
+  }
+
+  const storeArticle = await storeArticleObj(articleData);
+  console.log(storeArticle);
   // console.log(articleData);
 
   return articlesArray;
@@ -102,9 +110,9 @@ export const getArticleData = async (inputArray) => {
       const articleObj = await parseArticleHtml(articleHtml);
       articleObj.url = article; //add url to object
       articleObj.myId = inputObj.myId; //add myId to article Obj
+     
 
-      const storeArticle = await storeArticleObj(articleObj);
-      console.log(storeArticle);
+      return articleObj //return the object
     } catch (e) {
       console.log(e.url + "; " + e.message + "; F BREAK: " + e.function);
       continue; //if error move on to next link
@@ -150,6 +158,11 @@ export const parseArticleHtml = async (inputHtml) => {
   // Create a new Date object (month is 0-indexed in JavaScript)
   const articleDate = new Date(year, month - 1, day);
 
+  //get article pics (if they exist)
+  const mediaIconElement = document.querySelector(".media-icon")
+  const picURL = mediaIconElement.firstElementChild.getAttribute("href")
+
+  //get article content
   let articleContent = "";
   const contentElement = document.querySelector(".content-wrapper");
   const paragraphs = contentElement.querySelectorAll("p");
@@ -167,6 +180,7 @@ export const parseArticleHtml = async (inputHtml) => {
     title: articleTitle,
     date: articleDate,
     content: articleContent,
+    picURL: picURL
   };
 
   return articleObj;
@@ -214,3 +228,16 @@ const getMyId = async (inputId) => {
   //if equal just return input
   return inputId;
 };
+
+//!!!!
+//HERE, pull article pics as an array and scrape them
+//!!! 
+
+const getArticlePics = async (picURL) => {
+  //GO TO article (might need to build url from picURL)
+  const picHtml = await getArticleHtml(picURL)
+
+  //pull back array of pics
+
+  //run pic scrape functions to scrape them
+}
