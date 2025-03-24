@@ -72,6 +72,10 @@ export const runScrapeToDisplay = async (buttonClicked) => {
 //parses json array
 export const displayDataReturn = async (inputData) => {
   const { dataArray, dataType } = inputData;
+
+  //clear previous input
+  d.dataReturnElement.innerHTML = "";
+
   //TO DO: UNFUCK ERROR CHECK
   if (inputData.empty && inputData.empty === "YES") {
     d.dataReturnElement.textContent = "NO DATA STORED, please resubmit and set Scrape New to YES.";
@@ -86,17 +90,22 @@ export const displayDataReturn = async (inputData) => {
     return;
   }
 
+  //UNFUCK ABOVE
+
   console.log("DATA DISPLAY");
   console.dir(inputData);
 
-  //MAYBE use switch for below
-  //for articles
-  if (dataType === d.scrapeArticles.id) {
-    await parseArticleReturn(dataArray);
-  }
+  //change display based on return data
+  switch (dataType) {
+    //for articles
+    case d.scrapeArticles.id:
+      await parseArticleReturn(dataArray);
+      break;
 
-  if (dataType === d.scrapePics.id) {
-    await parsePicsReturn(dataArray);
+    //for pics
+    case d.scrapePics.id:
+      await parsePicsReturn(dataArray);
+      break;
   }
 
   d.dataReturnWrapper.classList.remove("hidden");
