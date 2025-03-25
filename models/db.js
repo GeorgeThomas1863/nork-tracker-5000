@@ -63,7 +63,10 @@ class dbModel {
       .collection(this.collection)
       .find()
       .sort({ [keyToLookup]: -1 })
-      .limit(1).toArray();
+      .limit(1)
+      .toArray();
+
+    if (!dataObj || !dataObj[0]) return null;
 
     console.log("DATA OBJ");
     console.log(dataObj[0]);

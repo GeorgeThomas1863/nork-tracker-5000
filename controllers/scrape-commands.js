@@ -3,8 +3,10 @@ import CONFIG from "../config/scrape-config.js";
 import { runGetNewData } from "./scraper-run.js";
 
 export const runScrapeBoth = async () => {
-  await runGetNewData(inputParams);
   console.log("scrape both");
+  console.log("NOT BUILT")
+  await runGetNewData(inputParams);
+  
 };
 
 export const runScrapePics = async (inputParams) => {

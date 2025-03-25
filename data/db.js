@@ -8,8 +8,11 @@ export const dbConnect = async () => {
   //connect to mongo server
   const client = await MongoClient.connect("mongodb://localhost:27017");
 
-  //BE SURE TO SWITCH BACK DUMBFUCK
-  db = client.db(CONFIG.dbName);
+  //!!!!BE SURE TO SWITCH BACK DUMBFUCK
+  // db = client.db(CONFIG.dbName);
+
+  //!!!!DELETE
+  db = client.db("kcna3");
 };
 
 //create function to call database outside file

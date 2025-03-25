@@ -160,7 +160,9 @@ export const parseArticleHtml = async (inputHtml) => {
 
   //get article pics (if they exist)
   const mediaIconElement = document.querySelector(".media-icon")
-  const picURL = mediaIconElement.firstElementChild.getAttribute("href")
+  const hrefURL = mediaIconElement.firstElementChild.getAttribute("href")
+  const picURL = "http://www.kcna.kp" + hrefURL
+  // http://www.kcna.kp/kp/media/photo/q/73388570c8a3bebb35f5b1b0dd7b1b30f4e58af2309ca4619e2b99da172d90b5.kcmsf
 
   //get article content
   let articleContent = "";
@@ -236,6 +238,10 @@ const getMyId = async (inputId) => {
 const getArticlePics = async (picURL) => {
   //GO TO article (might need to build url from picURL)
   const picHtml = await getArticleHtml(picURL)
+  console.log("AHHHHHHHHHHH")
+  console.log(picHtml)
+
+  process.exit()
 
   //pull back array of pics
 
