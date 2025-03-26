@@ -1,13 +1,16 @@
 import dbModel from "../../models/db.js";
 import CONFIG from "../../config/scrape-config.js";
 
+import { getArticlesAuto } from "./articles-get.js";
+import { postArticlesAuto } from "./articles-post.js";
+
 export const scrapeArticlesClick = async (inputParams) => {
   const { scrapeType, howMany, scrapeTo, tgId, pullNewData } = inputParams;
 
   //if set to new run scrape articles
   if (pullNewData === "yesNewData") {
     await getArticlesAuto();
-    await postArticlesAuto();
+    // await postArticlesAuto(); //pretty sure dont want to post here
   }
 
   //get article data from mongo
@@ -27,7 +30,7 @@ export const scrapeArticlesClick = async (inputParams) => {
   //add check for sending to tg instead
   if (scrapeTo === "displayTG") {
     //send anything new to tg
-    const tgData = await postArticlesLoop(tgId);
+    const tgData = await postArticlesAuto(tgId);
     console.log(tgData);
     return "DATA POSTED TO TG";
   }

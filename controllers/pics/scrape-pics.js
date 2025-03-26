@@ -2,9 +2,12 @@ import dbModel from "../../models/db.js";
 import CONFIG from "../../config/scrape-config.js";
 
 export const scrapePicsClick = async (inputParams) => {
-  const { scrapeType, howMany, scrapeTo, tgId } = inputParams;
+  const { scrapeType, howMany, scrapeTo, tgId, pullNewData } = inputParams;
 
-  await runGetNewData(inputParams);
+  //if user selects new data
+  if (pullNewData === "yesNewData") {
+    await scrapePicsAuto();
+  }
 
   const modelObj = {
     keyToLookup: "kcnaId",
