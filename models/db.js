@@ -22,8 +22,8 @@ class dbModel {
   }
 
   async urlNewCheck() {
-    // await db.dbConnect();
     const alreadyStored = await db.dbGet().collection(this.collection).findOne({ url: this.dataObject.url });
+
     if (alreadyStored) {
       const error = new Error("URL ALREADY STORED");
       error.url = this.dataObject.url;

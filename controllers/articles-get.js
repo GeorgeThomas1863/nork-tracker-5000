@@ -1,6 +1,7 @@
 import { JSDOM } from "jsdom";
 
 import CONFIG from "../config/scrape-config.js";
+import { downloadPicsFS } from "./pics.js";
 import KCNA from "../models/kcna.js";
 import dbModel from "../models/db.js";
 
@@ -8,24 +9,27 @@ export const scrapeArticles = async () => {
   //get the articles currently on site
   const articleListHtml = await getArticleListHtml();
   await logArticleLookup(articleListHtml); //log lookups can turn fof
-  const articlesArray = await parseArticleList(articleListHtml);
-  if (articlesArray.length === 0) return null; //no new articles
+  const articleArray = await parseArticleList(articleListHtml);
+  console.log("FUCKKKKKKKK");
+  console.log(articleArray);
+
+  if (articleArray.length === 0) return null; //no new articles
 
   //otherwise store articles and get article data; DEFAULT keep logging on
-  await storeArticleArray(articlesArray);
+  await storeArticleArray(articleArray);
   // console.log(storeData);
-  const articleData = await getArticleData(articlesArray);
+  const articleData = await getArticleData(articleArray);
 
   //if article has pics, SCRAPE THEM HERE, RETURN as an array
-  if (articleData && articleData.picURL){
-    await getArticlePics(articleData.picURL)
+  if (articleData && articleData.picURL) {
+    await getArticlePics(articleData.picURL);
   }
 
   const storeArticle = await storeArticleObj(articleData);
   console.log(storeArticle);
   // console.log(articleData);
 
-  return articlesArray;
+  return articleArray;
 };
 
 export const getArticleListHtml = async () => {
@@ -110,9 +114,8 @@ export const getArticleData = async (inputArray) => {
       const articleObj = await parseArticleHtml(articleHtml);
       articleObj.url = article; //add url to object
       articleObj.myId = inputObj.myId; //add myId to article Obj
-     
 
-      return articleObj //return the object
+      return articleObj; //return the object
     } catch (e) {
       console.log(e.url + "; " + e.message + "; F BREAK: " + e.function);
       continue; //if error move on to next link
@@ -159,9 +162,9 @@ export const parseArticleHtml = async (inputHtml) => {
   const articleDate = new Date(year, month - 1, day);
 
   //get article pics (if they exist)
-  const mediaIconElement = document.querySelector(".media-icon")
-  const hrefURL = mediaIconElement.firstElementChild.getAttribute("href")
-  const picURL = "http://www.kcna.kp" + hrefURL
+  const mediaIconElement = document.querySelector(".media-icon");
+  const hrefURL = mediaIconElement.firstElementChild.getAttribute("href");
+  const picURL = "http://www.kcna.kp" + hrefURL;
   // http://www.kcna.kp/kp/media/photo/q/73388570c8a3bebb35f5b1b0dd7b1b30f4e58af2309ca4619e2b99da172d90b5.kcmsf
 
   //get article content
@@ -182,7 +185,7 @@ export const parseArticleHtml = async (inputHtml) => {
     title: articleTitle,
     date: articleDate,
     content: articleContent,
-    picURL: picURL
+    picURL: picURL,
   };
 
   return articleObj;
@@ -231,19 +234,32 @@ const getMyId = async (inputId) => {
   return inputId;
 };
 
-//!!!!
-//HERE, pull article pics as an array and scrape them
-//!!! 
+//!!!!!!!!!!!!!!!!!!!!!!!!
+//!!!! FIGURE OUT HOW TO ADD THIS TO THE FUCKING OBJ AND MAYBE FUCKING REFACTOR
+//!!!!!!!!!!!!
 
 const getArticlePics = async (picURL) => {
-  //GO TO article (might need to build url from picURL)
-  const picHtml = await getArticleHtml(picURL)
-  console.log("AHHHHHHHHHHH")
-  console.log(picHtml)
+  //get html for link to pics
+  const picHtml = await getArticleHtml(picURL);
 
-  process.exit()
+  const dom = new JSDOM(picHtml);
+  const document = dom.window.document;
 
-  //pull back array of pics
+  const imgElements = document.querySelectorAll("img");
+  const articlePicArray = [];
 
-  //run pic scrape functions to scrape them
-}
+  // Use a for loop to extract the src attributes
+  for (let i = 0; i < imgElements.length; i++) {
+    const imgSrc = imgElements[i].getAttribute("src");
+    if (imgSrc) {
+      const articlePicURL = "http://www.kcna.kp" + imgSrc;
+      articlePicArray.push(articlePicURL);
+    }
+  }
+
+  //download pics (if they havent been already)
+  const downloadPics = await downloadPicsFS(articlePicArray);
+  console.log(downloadPics);
+
+  return articlePicArray;
+};

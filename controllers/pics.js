@@ -7,12 +7,26 @@ import { uploadPicsTG, editCaptionTG } from "./tg-api.js";
 export const scrapePics = async () => {
   const newPicUrls = await getPicURLs();
   console.log(newPicUrls);
-  const downloadPics = await downloadPicsFS();
+
+  //GET PIC ARRAY for downloading here (specifying type in arg)
+  const downloadPicArray = await getPicArray("picsToDownload");
+  console.log(picArray);
+
+  //run download pics
+  const downloadPics = await downloadPicsFS(downloadPicArray);
   console.log(downloadPics);
 
-  //post to id not necessary but included
-  const postToId = CONFIG.articleSendToId;
-  const uploadPics = await uploadPicsFS(postToId);
+  //get pic array for uploading here
+  const uploadPicArray = await getPicArray("picsToUpload");
+
+  //build upload obj
+  const uploadObj = {
+    picArray: uploadPicArray,
+    postToId: CONFIG.articleSendToId,
+  };
+
+  //run upload pics
+  const uploadPics = await uploadPicsFS(uploadObj);
   console.log(uploadPics);
 
   return newPicUrls;
@@ -84,10 +98,8 @@ export const getPicURLs = async () => {
 };
 
 //KCNA Download attempt 2
-export const downloadPicsFS = async () => {
+export const downloadPicsFS = async (picArray) => {
   // //TURN BACK ON
-  const picArray = await getPicArray("picsToDownload");
-  console.log(picArray);
 
   //loop //TURN ON
   for (let i = 0; i < picArray.length; i++) {
@@ -114,9 +126,10 @@ export const downloadPicsFS = async () => {
   }
 };
 
-export const uploadPicsFS = async (postToId = CONFIG.articleSendToId) => {
-  const picArray = await getPicArray("picsToUpload");
-  console.log(picArray);
+
+
+export const uploadPicsFS = async (uploadObj) => {
+  const { picArray, postToId } = uploadObj;
 
   for (let i = 0; i < picArray.length; i++) {
     try {

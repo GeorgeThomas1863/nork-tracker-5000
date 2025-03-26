@@ -4,9 +4,8 @@ import { runGetNewData } from "./scraper-run.js";
 
 export const runScrapeBoth = async () => {
   console.log("scrape both");
-  console.log("NOT BUILT")
+  console.log("NOT BUILT");
   await runGetNewData(inputParams);
-  
 };
 
 export const runScrapePics = async (inputParams) => {
@@ -21,15 +20,21 @@ export const runScrapePics = async (inputParams) => {
   const dataModel = new dbModel(modelObj, CONFIG.downloadedCollection);
   const picDataArray = await dataModel.getLastItemsArray();
 
+  //SHOULD RENAME COMBINE WITH BELOW
   const returnObj = {
     dataArray: picDataArray,
     dataType: scrapeType,
   };
 
+  const uploadObj = {
+    picArray: picDataArray,
+    postToId: tgId, //defaults to same as config
+  };
+
   //add check for sending to tg
   if (scrapeTo === "displayTG") {
     //send anything new to tg
-    const tgData = await uploadPicsFS(tgId);
+    const tgData = await uploadPicsFS(uploadObj);
     console.log(tgData);
     return { data: "DATA POSTED TO TG" };
   }
@@ -62,7 +67,6 @@ export const runScrapeArticles = async (inputParams) => {
     dataArray: articleDataArray,
     dataType: scrapeType,
   };
-
 
   //add check for sending to tg instead
   if (scrapeTo === "displayTG") {
