@@ -1,6 +1,6 @@
-import { scrapeArticles } from "./articles-get.js";
-import { postArticlesLoop } from "./articles-post.js";
-import { scrapePics } from "./pics.js";
+import { getArticlesAuto } from "../articles/articles-get.js";
+import { postArticlesAuto } from "../articles/articles-post.js";
+import { scrapePicsAuto } from "../pics/pics-main.js";
 import { scrapeKCNA } from "./scrape-main.js";
 
 export const runRestartAutoScraper = async (inputParams) => {
@@ -18,18 +18,18 @@ export const runGetNewData = async (inputParams) => {
   if (pullNewData === "noNewData") return null;
   switch (scrapeType) {
     case "scrapeArticles":
-      await scrapeArticles();
-      await postArticlesLoop();
+      await getArticlesAuto();
+      await postArticlesAuto();
       break;
 
     case "scrapePics":
-      await scrapePics();
+      await scrapePicsAuto();
       break;
 
     case "scrapeBoth":
-      await scrapeArticles();
-      await postArticlesLoop();
-      await scrapePics();
+      await getArticlesAuto();
+      await postArticlesAuto();
+      await scrapePicsAuto();
       break;
   }
 
