@@ -1,9 +1,9 @@
-import dbModel from "../models/db.js";
-import CONFIG from "../config/scrape-config.js";
-import { sendMessageChunkTG } from "./tg-api.js";
+import dbModel from "../../models/db.js";
+import CONFIG from "../../config/scrape-config.js";
+import { sendMessageChunkTG } from "../tg-api.js";
 
 //default post to
-export const postArticlesLoop = async (postToId = CONFIG.articleSendToId) => {
+export const postArticlesAuto = async (postToId = CONFIG.articleSendToId) => {
   //check if any new articles
   const articleObj = {
     collection1: CONFIG.articleContentCollection,
@@ -39,7 +39,7 @@ export const postArticlesLoop = async (postToId = CONFIG.articleSendToId) => {
 };
 
 //normalize tg message
-const normalizeInputsTG = async (inputObj) => {
+export const normalizeInputsTG = async (inputObj) => {
   const urlRaw = inputObj.url;
   const urlNormal = urlRaw.replace(/\./g, "[.]").replace(/:/g, "[:]");
   const dateRaw = inputObj.date;
@@ -57,7 +57,7 @@ const normalizeInputsTG = async (inputObj) => {
 };
 
 //chunk content logic if too long
-const handleSendMessage = async (inputObj) => {
+export const handleSendMessage = async (inputObj) => {
   const { url, date, title, content, postToId } = inputObj; //destructure everything
   const maxLength = CONFIG.tgMaxLength - title.length - date.length - url.length - 100;
   const chunkTotal = Math.ceil(content.length / maxLength);

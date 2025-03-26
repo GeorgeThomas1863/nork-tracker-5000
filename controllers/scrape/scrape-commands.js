@@ -1,5 +1,5 @@
-import dbModel from "../models/db.js";
-import CONFIG from "../config/scrape-config.js";
+import dbModel from "../../models/db.js";
+import CONFIG from "../../config/scrape-config.js";
 import { runGetNewData } from "./scraper-run.js";
 
 export const runScrapeBoth = async () => {

@@ -1,7 +1,8 @@
-import { scrapeArticles } from "./articles-get.js";
-import { postArticlesLoop } from "./articles-post.js";
-import { scrapePics } from "./pics.js";
+import { getArticlesAuto } from "../articles/articles-get.js";
+import { postArticlesAuto } from "../articles/articles-post.js";
+import { scrapePicsAuto } from "../pics/pics-main.js";
 
+import { logArticleLookup, storeArticleArray, storeArticleObj } from "../articles/articles-store.js";
 // const scrapeHourly = async (scrapeFunction) => {
 //   scrapeFunction();
 
@@ -28,11 +29,13 @@ import { scrapePics } from "./pics.js";
 
 //Function being executed
 export const scrapeKCNA = async () => {
-  await scrapeArticles();
-  await postArticlesLoop();
-  await scrapePics();
-  console.log("FINISHED SCRAPE")
+  await getArticlesAuto();
+  await postArticlesAuto();
+  await scrapePicsAuto();
+  console.log("FINISHED SCRAPE");
 };
 
 // //PASS IN FUNCTION AS PARAM TO EXECUTE HOURLY
 // scrapeHourly(scrapeKCNA);
+
+//---------------------
