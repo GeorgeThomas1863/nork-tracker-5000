@@ -3,6 +3,8 @@ import { JSDOM } from "jsdom";
 import CONFIG from "../../config/scrape-config.js";
 import dbModel from "../../models/db.js";
 
+import { getMyId } from "./articles-get.js";
+
 //parses MAIN PAGE with list of articles, returns array
 export const parseArticleList = async (inputData) => {
   const articleArray = [];

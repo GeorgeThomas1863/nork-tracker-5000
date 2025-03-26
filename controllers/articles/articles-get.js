@@ -1,11 +1,12 @@
 import { JSDOM } from "jsdom";
 
-import { logArticleLookup, storeArticleArray, storeArticleObj } from "./articles-store.js";
-import { downloadPicsFS } from "../pics/pics-main.js";
-
 import CONFIG from "../../config/scrape-config.js";
 import KCNA from "../../models/kcna.js";
 import dbModel from "../../models/db.js";
+
+import { parseArticleHtml, parseArticleList } from "./articles-parse.js";
+import { logArticleLookup, storeArticleArray, storeArticleObj } from "./articles-store.js";
+import { downloadPicsFS } from "../pics/pics-main.js";
 
 //MAIN auto function for scraping articles
 export const getArticlesAuto = async () => {
