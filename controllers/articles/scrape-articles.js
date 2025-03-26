@@ -1,5 +1,5 @@
-import dbModel from "../models/db.js";
-import CONFIG from "../config/scrape-config.js";
+import dbModel from "../../models/db.js";
+import CONFIG from "../../config/scrape-config.js";
 
 export const scrapeArticlesClick = async (inputParams) => {
   const { scrapeType, howMany, scrapeTo, tgId, pullNewData } = inputParams;
