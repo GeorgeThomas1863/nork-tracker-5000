@@ -1,8 +1,8 @@
-import { getArticlesAuto } from "../articles/articles-get.js";
-import { postArticlesAuto } from "../articles/articles-post.js";
-import { scrapePicsAuto } from "../pics/pics-main.js";
+import { getArticlesAuto } from "./articles/articles-get.js";
+import { postArticlesAuto } from "./articles/articles-post.js";
+import { scrapePicsAuto } from "./pics/pics-main.js";
 
-import { logArticleLookup, storeArticleArray, storeArticleObj } from "../articles/articles-store.js";
+import { logArticleLookup, storeArticleArray, storeArticleObj } from "./articles/articles-store.js";
 // const scrapeHourly = async (scrapeFunction) => {
 //   scrapeFunction();
 

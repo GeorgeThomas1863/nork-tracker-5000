@@ -1,6 +1,6 @@
-import CONFIG from "../../config/scrape-config.js";
-import { runScrapeBoth, runScrapePics, runScrapeArticles, runScrapeURL } from "./scrape-commands.js";
-import { runRestartAutoScraper } from "./scraper-run.js";
+import CONFIG from "../config/scrape-config.js";
+import { scrapeArticlesClick } from "./articles/scrape-articles.js";
+import { scrapePicsClick } from "./pics/scrape-pics.js";
 
 export const parseCommand = async (req, res) => {
   const inputParams = await setInputParamsDefaults(req.body);
@@ -14,11 +14,11 @@ export const parseCommand = async (req, res) => {
       break;
 
     case "scrapePics":
-      data = await runScrapePics(inputParams);
+      data = await scrapePicsClick(inputParams);
       break;
 
     case "scrapeArticles":
-      data = await runScrapeArticles(inputParams);
+      data = await scrapeArticlesClick(inputParams);
       break;
 
     case "scrapeURL":
@@ -57,4 +57,48 @@ const setInputParamsDefaults = async (inputParams) => {
     }
   }
   return returnObj;
+};
+
+export const runScrapeBoth = async () => {
+  console.log("scrape both");
+  console.log("NOT BUILT");
+  await runGetNewData(inputParams);
+};
+
+export const runRestartAutoScraper = async (inputParams) => {
+  //MAKE WAY TO HANDLE SETTING TG ID
+
+  const data = await scrapeKCNA();
+  return data;
+};
+
+//just run once
+export const runGetNewData = async (inputParams) => {
+  const { pullNewData, scrapeType } = inputParams;
+
+  //check if get new data on
+  if (pullNewData === "noNewData") return null;
+  switch (scrapeType) {
+    case "scrapeArticles":
+      await getArticlesAuto();
+      await postArticlesAuto();
+      break;
+
+    case "scrapePics":
+      await scrapePicsAuto();
+      break;
+
+    case "scrapeBoth":
+      await getArticlesAuto();
+      await postArticlesAuto();
+      await scrapePicsAuto();
+      break;
+  }
+
+  console.log("FINISHED GETTING NEW DATA");
+  return;
+};
+
+export const runScrapeURL = async () => {
+  console.log("scrapeURL");
 };
