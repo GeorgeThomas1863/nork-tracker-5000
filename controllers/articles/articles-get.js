@@ -25,17 +25,11 @@ export const getArticlesAuto = async () => {
   // console.log(storeData);
 
   //get data for each article by looping through array
-  const articleData = await getArticleData(articleArray);
-
-  //if article has NEW pics, Download THEM HERE, RETURN as an array
-  if (articleData && articleData.picURL) {
-    const articlePicArray = await getArticlePics(articleData.picURL);
-    articleData.articlePicArray = articlePicArray;
-  }
+  const articleDataArray = await getArticleData(articleArray);
 
   // console.log(articleData);
-  const storeArticle = await storeArticleObj(articleData);
-  // console.log(storeArticle);
+  const storeArticle = await storeArticleObj(articleDataArray);
+  console.log(storeArticle);
 
   return articleArray;
 };
@@ -54,9 +48,10 @@ export const getArticleListHtml = async () => {
   return articleListHtml;
 };
 
+//returns ARRAY of objs
 export const getArticleData = async (inputArray) => {
-  console.log("FUCK MY BITCH FACE");
-  console.log(inputArray);
+  //return an array
+  const articleObjArray = [];
   for (let i = 0; i < inputArray.length; i++) {
     try {
       //check article data isnt already saved
@@ -72,12 +67,21 @@ export const getArticleData = async (inputArray) => {
       articleObj.url = article; //add url to object
       articleObj.myId = inputObj.myId; //add myId to article Obj
 
-      return articleObj; //return the object
+      //LOOK FOR FUCKING PICS HERE
+      if (articleObj && articleObj.picURL) {
+        const articlePicArray = await getArticlePics(articleObj.picURL);
+        articleObj.articlePicArray = articlePicArray;
+      }
+
+      //add obj to array
+      articleObjArray.push(articleObj);
     } catch (e) {
       console.log(e.url + "; " + e.message + "; F BREAK: " + e.function);
       continue; //if error move on to next link
     }
   }
+
+  return articleObjArray; //return the ARRAY dumbfuck
 };
 
 export const getArticleHtml = async (url) => {
