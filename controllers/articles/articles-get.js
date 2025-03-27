@@ -29,12 +29,13 @@ export const getArticlesAuto = async () => {
 
   //if article has NEW pics, Download THEM HERE, RETURN as an array
   if (articleData && articleData.picURL) {
-    await getArticlePics(articleData.picURL);
+    const articlePicArray = await getArticlePics(articleData.picURL);
+    articleData.articlePicArray = articlePicArray;
   }
 
+  console.log(articleData);
   const storeArticle = await storeArticleObj(articleData);
-  // console.log(storeArticle);
-  // console.log(articleData);
+  console.log(storeArticle);
 
   return articleArray;
 };
@@ -119,11 +120,10 @@ export const getArticlePics = async (picURL) => {
   for (let i = 0; i < imgElements.length; i++) {
     const imgSrc = imgElements[i].getAttribute("src");
     if (imgSrc) {
-      //extract out final numbers
+      //extract out final number for pic file name
       const picPathNum = imgSrc.substring(imgSrc.length - 11, imgSrc.length - 4);
-      console.log("MOTHERFUCKER");
-      console.log(picPathNum);
       const picPathEnd = String(Number(picPathNum));
+
       const picObj = {
         url: "http://www.kcna.kp" + imgSrc,
         picPath: CONFIG.savePicPathBase + picPathEnd + ".jpg",
@@ -134,8 +134,7 @@ export const getArticlePics = async (picURL) => {
   }
 
   //download pics (if they havent been already)
-  const downloadPics = await downloadPicsFS(articlePicArray);
-  console.log(downloadPics);
+  await downloadPicsFS(articlePicArray);
 
   return articlePicArray;
 };
