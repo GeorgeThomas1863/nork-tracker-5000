@@ -119,9 +119,14 @@ export const getArticlePics = async (picURL) => {
   for (let i = 0; i < imgElements.length; i++) {
     const imgSrc = imgElements[i].getAttribute("src");
     if (imgSrc) {
+      //extract out final numbers
+      const picPathNum = imgSrc.substring(imgSrc.length - 11, imgSrc.length - 4);
+      console.log("MOTHERFUCKER");
+      console.log(picPathNum);
+      const picPathEnd = String(Number(picPathNum));
       const picObj = {
         url: "http://www.kcna.kp" + imgSrc,
-        picPath: CONFIG.savePicPathBase,
+        picPath: CONFIG.savePicPathBase + picPathEnd + ".jpg",
       };
 
       articlePicArray.push(picObj);
