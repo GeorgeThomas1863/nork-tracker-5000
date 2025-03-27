@@ -33,9 +33,9 @@ export const getArticlesAuto = async () => {
     articleData.articlePicArray = articlePicArray;
   }
 
-  console.log(articleData);
+  // console.log(articleData);
   const storeArticle = await storeArticleObj(articleData);
-  console.log(storeArticle);
+  // console.log(storeArticle);
 
   return articleArray;
 };
@@ -55,6 +55,8 @@ export const getArticleListHtml = async () => {
 };
 
 export const getArticleData = async (inputArray) => {
+  console.log("FUCK MY BITCH FACE");
+  console.log(inputArray);
   for (let i = 0; i < inputArray.length; i++) {
     try {
       //check article data isnt already saved
