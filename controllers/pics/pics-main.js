@@ -98,7 +98,7 @@ export const getPicURLs = async () => {
   return true;
 };
 
-//KCNA Download attempt 2
+//ACCEPTS ARRAY OF OBJECTS
 export const downloadPicsFS = async (picArray) => {
   //loop
   for (let i = 0; i < picArray.length; i++) {

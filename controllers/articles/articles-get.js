@@ -105,10 +105,6 @@ export const getMyId = async (inputId) => {
   return inputId;
 };
 
-//!!!!!!!!!!!!!!!!!!!!!!!!
-//!!!! FIGURE OUT HOW TO ADD THIS TO THE FUCKING OBJ AND MAYBE FUCKING REFACTOR
-//!!!!!!!!!!!!
-
 export const getArticlePics = async (picURL) => {
   //get html for link to pics
   const picHtml = await getArticleHtml(picURL);
@@ -123,8 +119,12 @@ export const getArticlePics = async (picURL) => {
   for (let i = 0; i < imgElements.length; i++) {
     const imgSrc = imgElements[i].getAttribute("src");
     if (imgSrc) {
-      const articlePicURL = "http://www.kcna.kp" + imgSrc;
-      articlePicArray.push(articlePicURL);
+      const picObj = {
+        url: "http://www.kcna.kp" + imgSrc,
+        picPath: CONFIG.savePicPathBase,
+      };
+
+      articlePicArray.push(picObj);
     }
   }
 
