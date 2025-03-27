@@ -8,7 +8,7 @@ export const storeArticleArray = async (inputArray) => {
     const urlObj = inputArray[i];
     const storeModel = new dbModel(urlObj, CONFIG.articleListCollection);
     const storeURL = await storeModel.storeUniqueURL();
-    console.log(storeURL);
+    // console.log(storeURL);
   }
 };
 

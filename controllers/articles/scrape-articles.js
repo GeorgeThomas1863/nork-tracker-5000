@@ -31,14 +31,14 @@ export const scrapeArticlesClick = async (inputParams) => {
   if (scrapeTo === "displayTG") {
     //send anything new to tg
     const tgData = await postArticlesAuto(tgId);
-    console.log(tgData);
+    // console.log(tgData);
     return "DATA POSTED TO TG";
   }
 
   //if empty //UNFUCK
   if (articleDataArray.length === 0) {
     articleDataArray.empty = "YES";
-    console.log(articleDataArray);
+    // console.log(articleDataArray);
     return articleDataArray;
   }
 

@@ -32,7 +32,7 @@ export const scrapePicsClick = async (inputParams) => {
   if (scrapeTo === "displayTG") {
     //send anything new to tg
     const tgData = await uploadPicsFS(uploadObj);
-    console.log(tgData);
+    // console.log(tgData);
     return { data: "DATA POSTED TO TG" };
   }
 

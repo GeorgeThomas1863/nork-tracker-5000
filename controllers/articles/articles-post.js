@@ -12,7 +12,7 @@ export const postArticlesAuto = async (postToId = CONFIG.articleSendToId) => {
 
   const articleModel = new dbModel(articleObj, "");
   const articleArray = await articleModel.findNewURLs();
-  console.log(articleArray);
+  // console.log(articleArray);
   if (articleArray.length === 0) return null; //no new articles to post
 
   //loop through ARTICLE array
@@ -25,7 +25,7 @@ export const postArticlesAuto = async (postToId = CONFIG.articleSendToId) => {
       //add post to to object
       normalObj.postToId = postToId;
       const sendMessageData = await handleSendMessage(normalObj);
-      console.log(sendMessageData);
+      // console.log(sendMessageData);
 
       //store original object, not normalized data
       const storeModel = new dbModel(articleObj, CONFIG.articlePostedCollection);

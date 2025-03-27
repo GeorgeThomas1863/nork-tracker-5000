@@ -17,7 +17,7 @@ class KCNA {
   async getHTML() {
     try {
       const res = await fetch(this.dataObject.url);
-      console.log(res);
+      // console.log(res);
       const data = await res.text();
       return data;
     } catch (error) {

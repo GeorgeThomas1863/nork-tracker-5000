@@ -68,15 +68,13 @@ class dbModel {
 
     if (!dataObj || !dataObj[0]) return null;
 
-    console.log("DATA OBJ");
-    console.log(dataObj[0]);
     return +dataObj[0][keyToLookup];
   }
 
   async getLastItemsArray() {
     const keyToLookup = this.dataObject.keyToLookup;
     const howMany = +this.dataObject.howMany;
-    console.log(howMany);
+    // console.log(howMany);
     const dataArray = await db
       .dbGet()
       .collection(this.collection)

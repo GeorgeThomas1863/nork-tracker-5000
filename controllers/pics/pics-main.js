@@ -7,15 +7,15 @@ import { uploadPicsTG, editCaptionTG } from "../tg-api.js";
 
 export const scrapePicsAuto = async () => {
   const newPicUrls = await getPicURLs();
-  console.log(newPicUrls);
+  // console.log(newPicUrls);
 
   //GET PIC ARRAY for downloading here (specifying type in arg)
   const downloadPicArray = await getPicArray("picsToDownload");
-  console.log(picArray);
+  // console.log(downloadPicArray);
 
   //run download pics
   const downloadPics = await downloadPicsFS(downloadPicArray);
-  console.log(downloadPics);
+  // console.log(downloadPics);
 
   //get pic array for uploading here
   const uploadPicArray = await getPicArray("picsToUpload");
@@ -28,7 +28,7 @@ export const scrapePicsAuto = async () => {
 
   //run upload pics
   const uploadPics = await uploadPicsFS(uploadObj);
-  console.log(uploadPics);
+  // console.log(uploadPics);
 
   return newPicUrls;
 };
@@ -38,8 +38,8 @@ export const getPicURLs = async () => {
   const dateArray = await getDateArray();
   const currentKcnaId = await getCurrentKcnaId();
 
-  console.log("HERE CURRENT KCNA ID");
-  console.log(currentKcnaId);
+  // console.log("HERE CURRENT KCNA ID");
+  // console.log(currentKcnaId);
 
   //loop 200 (400 lookups an hour)
   const startId = currentKcnaId - 100;
@@ -49,12 +49,12 @@ export const getPicURLs = async () => {
 
   //loop
   for (let i = startId; i <= stopId; i++) {
-    console.log(i);
+    // console.log(i);
     for (let k = 0; k < dateArray.length; k++) {
       try {
         const dateString = dateArray[arrayIndex];
         const url = CONFIG.picBaseURL + dateString + "/PIC00" + i + ".jpg";
-        console.log(url);
+        // console.log(url);
         const urlObj = {
           url: url,
         };
@@ -75,7 +75,7 @@ export const getPicURLs = async () => {
         }
 
         //build pic path HERE
-        console.log("AHHHHH"); //store it
+        //store it
         const picPath = CONFIG.savePicPathBase + i + ".jpg";
         const storeParams = {
           url: url,
@@ -86,8 +86,8 @@ export const getPicURLs = async () => {
 
         const dataModel = new dbModel(storeParams, CONFIG.picCollection);
         const storePicData = await dataModel.storeUniqueURL();
-        console.log(storeParams);
-        console.log(storePicData);
+        // console.log(storeParams);
+        // console.log(storePicData);
         break;
       } catch (e) {
         console.log(e.message + "; URL: " + e.url + "; BREAK: " + e.function);
@@ -113,12 +113,12 @@ export const downloadPicsFS = async (picArray) => {
       //download pic
       const downloadPicModel = new KCNA(downloadPicParams);
       const downloadPicData = await downloadPicModel.downloadPicFS();
-      console.log(downloadPicData);
+      // console.log(downloadPicData);
 
       //store pic was downloaded
       const storePicModel = new dbModel(pic, CONFIG.downloadedCollection);
       const storePicDownloaded = await storePicModel.storeUniqueURL();
-      console.log(storePicDownloaded);
+      // console.log(storePicDownloaded);
     } catch (e) {
       console.log(e.url + "; " + e.message + "; F BREAK: " + e.function);
     }
@@ -145,12 +145,12 @@ export const uploadPicsFS = async (uploadObj) => {
       const normalURL = defangURL.substring(15);
       const caption = "ID: " + pic.kcnaId + "; URL: " + normalURL;
       const editCaptionData = await editCaptionTG(uploadPicData, caption);
-      console.log(editCaptionData);
+      // console.log(editCaptionData);
 
       //store pic was uploaded
       const storePicModel = new dbModel(pic, CONFIG.uploadedCollection);
       const storePicDownloaded = await storePicModel.storeUniqueURL();
-      console.log(storePicDownloaded);
+      // console.log(storePicDownloaded);
     } catch (e) {
       console.log(e.url + "; " + e.message + "; F BREAK: " + e.function);
     }
