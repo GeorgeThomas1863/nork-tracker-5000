@@ -72,9 +72,7 @@ export const runRestartAutoScraper = async (inputParams) => {
   //HAVE IT RESTART HOURLY SCRAPER, JUST GETTING NEW DATA FOR TESTING
   const autoObj = { ...inputParams }; //destructure input
   autoObj.scrapeType = "scrapeBoth";
-
-  console.log("CUSTOM FUNCTION TO RESTART AUTO SCRAPER");
-  console.log(autoObj);
+  autoObj.pullNewData = "yesNewData" //turn on dumbass
 
   const data = await runGetNewData(autoObj);
   return data;
@@ -97,6 +95,7 @@ export const runGetNewData = async (inputParams) => {
       break;
 
     case "scrapeBoth":
+      console.log("FAGGGGGGGOT")
       await getArticlesAuto();
       await postArticlesAuto();
       await scrapePicsAuto();
