@@ -26,6 +26,7 @@ export const parseCommand = async (req, res) => {
       break;
 
     case "restartAuto":
+      console.log("PARSER");
       data = await runRestartAutoScraper(inputParams);
       break;
   }
@@ -71,6 +72,9 @@ export const runRestartAutoScraper = async (inputParams) => {
   //HAVE IT RESTART HOURLY SCRAPER, JUST GETTING NEW DATA FOR TESTING
   const autoObj = { ...inputParams }; //destructure input
   autoObj.scrapeType = "scrapeBoth";
+
+  console.log("CUSTOM FUNCTION TO RESTART AUTO SCRAPER");
+  console.log(autoObj);
 
   const data = await runGetNewData(autoObj);
   return data;
