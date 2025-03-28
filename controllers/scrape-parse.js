@@ -98,7 +98,6 @@ export const runGetNewData = async (inputParams) => {
       break;
 
     case "scrapeBoth":
-      console.log("FAGGGGGGGOT");
       await getArticlesAuto();
       await postArticlesAuto();
       await scrapePicsAuto();

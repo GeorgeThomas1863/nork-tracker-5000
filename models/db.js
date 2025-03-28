@@ -23,6 +23,8 @@ class dbModel {
 
   async urlNewCheck() {
     const alreadyStored = await db.dbGet().collection(this.collection).findOne({ url: this.dataObject.url });
+    console.log("FUCK MY FACE");
+    console.log(alreadyStored);
 
     if (alreadyStored) {
       const error = new Error("URL ALREADY STORED");
