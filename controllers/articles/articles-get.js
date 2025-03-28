@@ -15,7 +15,12 @@ export const getArticlesAuto = async () => {
 
   //log lookups can turn fof
   await logArticleLookup(articleListHtml);
+
+  //parse out an array of articles
   const articleArray = await parseArticleList(articleListHtml);
+
+  console.log("AHHHHHHHHHHHHH")
+  console.log(articleArray)
 
   //no new articles
   if (articleArray.length === 0) return null;
