@@ -1,6 +1,9 @@
 import CONFIG from "../config/scrape-config.js";
+import { getArticlesAuto } from "./articles/articles-get.js";
+import { postArticlesAuto } from "./articles/articles-post.js";
 import { scrapeArticlesClick } from "./articles/scrape-articles.js";
 import { scrapePicsClick } from "./pics/scrape-pics.js";
+import { scrapePicsAuto } from "./pics/pics-main.js";
 
 export const parseCommand = async (req, res) => {
   const inputParams = await setInputParamsDefaults(req.body);
@@ -72,7 +75,7 @@ export const runRestartAutoScraper = async (inputParams) => {
   //HAVE IT RESTART HOURLY SCRAPER, JUST GETTING NEW DATA FOR TESTING
   const autoObj = { ...inputParams }; //destructure input
   autoObj.scrapeType = "scrapeBoth";
-  autoObj.pullNewData = "yesNewData" //turn on dumbass
+  autoObj.pullNewData = "yesNewData"; //turn on dumbass
 
   const data = await runGetNewData(autoObj);
   return data;
@@ -95,7 +98,7 @@ export const runGetNewData = async (inputParams) => {
       break;
 
     case "scrapeBoth":
-      console.log("FAGGGGGGGOT")
+      console.log("FAGGGGGGGOT");
       await getArticlesAuto();
       await postArticlesAuto();
       await scrapePicsAuto();
