@@ -68,7 +68,11 @@ export const runScrapeBoth = async () => {
 export const runRestartAutoScraper = async (inputParams) => {
   //MAKE WAY TO HANDLE SETTING TG ID
 
-  const data = await scrapeKCNA();
+  //HAVE IT RESTART HOURLY SCRAPER, JUST GETTING NEW DATA FOR TESTING
+  const autoObj = { ...inputParams }; //destructure input
+  autoObj.scrapeType = "scrapeBoth";
+
+  const data = await runGetNewData(autoObj);
   return data;
 };
 
