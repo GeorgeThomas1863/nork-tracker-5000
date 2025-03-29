@@ -4,6 +4,8 @@ import CONFIG from "../../config/scrape-config.js";
 import { getPicURLs, downloadPicsFS, uploadPicsFS } from "./pics-main.js";
 import { getPicArray } from "./pics-util.js";
 
+//DOES ALL 3: looks for, downloads, AND uploading new pics
+//if ANY new in ANY of 3 will handle
 export const scrapePicsAuto = async () => {
   console.log("ON DOWNLOADING NEW PICS");
 
@@ -11,16 +13,10 @@ export const scrapePicsAuto = async () => {
   console.log("LIST OF NEW PICS");
   console.log(newPicUrls);
 
-  //exit if no new pics to download
-  if (!newPicUrls || newPicUrls.length === 0) return;
-
   //GET PIC ARRAY for downloading here (specifying type in arg)
   const downloadPicArray = await getPicArray("picsToDownload");
-
   console.log("!!!!!PIC ARRAY!!!!!");
   console.log(downloadPicArray);
-
-  console.log("DOWNLOADING PICS");
 
   //run download pics
   await downloadPicsFS(downloadPicArray);

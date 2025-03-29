@@ -81,6 +81,11 @@ export const downloadPicsFS = async (picArray) => {
     try {
       const pic = picArray[i];
 
+      //add check HERE if pic has already been downloaded
+      const storePicModel = new dbModel(pic, CONFIG.downloadedCollection);
+      await storePicModel.urlNewCheck(); //throws error if pic already downloaded
+
+      //otherwise build params to download
       const downloadPicParams = {
         url: pic.url,
         savePath: pic.picPath,
@@ -94,9 +99,8 @@ export const downloadPicsFS = async (picArray) => {
       console.log(downloadPicData);
 
       //store pic was downloaded
-      const storePicModel = new dbModel(pic, CONFIG.downloadedCollection);
       const storePicDownloaded = await storePicModel.storeUniqueURL();
-      // console.log(storePicDownloaded);
+      console.log(storePicDownloaded);
     } catch (e) {
       console.log(e.url + "; " + e.message + "; F BREAK: " + e.function);
     }
@@ -109,11 +113,18 @@ export const uploadPicsFS = async (uploadObj) => {
   //sort the array //UNSURE IF WORKS
   picArray.sort((a, b) => a.kcnaId - b.kcnaId);
 
-  console.log("PIC ARRAY AFTER SORT");
+  console.log("!!!!!! UPLOAD PIC ARRAY AFTER SORT");
+  console.log(picArray);
 
   for (let i = 0; i < picArray.length; i++) {
     try {
       const pic = picArray[i];
+
+      //add check if pic is already uploaded
+      const storePicModel = new dbModel(pic, CONFIG.uploadedCollection);
+      await storePicModel.urlNewCheck(); //throws error if pic already uploaded
+
+      //otherwise build params and download
       const params = {
         chatId: postToId,
         picPath: pic.picPath,
@@ -129,13 +140,12 @@ export const uploadPicsFS = async (uploadObj) => {
       const defangURL = pic.url.replace(/\./g, "[.]").replace(/:/g, "[:]");
       const normalURL = defangURL.substring(15);
       const caption = "ID: " + pic.kcnaId + "; URL: " + normalURL;
-      const editCaptionData = await editCaptionTG(uploadPicData, caption);
+      await editCaptionTG(uploadPicData, caption);
       // console.log(editCaptionData);
 
       //store pic was uploaded
-      const storePicModel = new dbModel(pic, CONFIG.uploadedCollection);
       const storePicDownloaded = await storePicModel.storeUniqueURL();
-      // console.log(storePicDownloaded);
+      console.log(storePicDownloaded);
     } catch (e) {
       console.log(e.url + "; " + e.message + "; F BREAK: " + e.function);
     }
