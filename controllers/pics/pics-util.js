@@ -12,13 +12,6 @@ export const getDateArray = async () => {
     //plus 1 needed bc month 0 indexed
     const monthRaw = currentMonth + i + 1;
 
-    // date.setMonth(currentDate.getMonth() + i);
-
-    // Get month (0-11) and add 1 to get 1-12 range
-    // const monthRaw = date.getMonth() + 1;
-
-    console.log(monthRaw);
-
     // Pad month with leading zero if needed
     const month = monthRaw.toString().padStart(2, "0");
 
@@ -28,8 +21,6 @@ export const getDateArray = async () => {
     // Add month+year string to result array
     dateArray.push(year + "" + month);
   }
-
-  console.log(dateArray);
 
   return dateArray;
 };
