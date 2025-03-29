@@ -6,7 +6,7 @@ import dbModel from "../../models/db.js";
 
 import { parseArticleHtml, parseArticleList } from "./articles-parse.js";
 import { logArticleLookup, storeArticleArray, storeArticleObj } from "./articles-store.js";
-import { downloadPicsFS } from "../pics/pics-main.js";
+// import { downloadPicsFS } from "../pics/pics-main.js";
 
 //MAIN auto function for scraping articles
 export const getArticlesAuto = async () => {
@@ -19,8 +19,6 @@ export const getArticlesAuto = async () => {
   //parse out an array of articles
   const articleArray = await parseArticleList(articleListHtml);
 
-  console.log("GOT ARTICLE ARRAY");
-
   //no new articles
   if (articleArray.length === 0) return null;
 
@@ -31,6 +29,7 @@ export const getArticlesAuto = async () => {
   //get data for each article by looping through array
   const articleObjArray = await getArticleObjArray(articleArray);
 
+  console.log("AHHHHHHHHHH");
   console.log("!!!! GOT ARTICLE OBJ ARRAY!!!!!");
   console.log(articleObjArray);
 
