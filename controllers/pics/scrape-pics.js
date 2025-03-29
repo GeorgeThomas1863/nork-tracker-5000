@@ -1,6 +1,53 @@
 import dbModel from "../../models/db.js";
 import CONFIG from "../../config/scrape-config.js";
 
+import { getPicURLs, downloadPicsFS, uploadPicsFS } from "./pics-main.js";
+import { getPicArray } from "./pics-util.js";
+
+export const scrapePicsAuto = async () => {
+  console.log("ON DOWNLOADING NEW PICS");
+
+  const newPicUrls = await getPicURLs();
+  console.log("LIST OF NEW PICS");
+  console.log(newPicUrls);
+
+  //exit if no new pics to download
+  if (!newPicUrls || newPicUrls.length === 0) return;
+
+  //GET PIC ARRAY for downloading here (specifying type in arg)
+  const downloadPicArray = await getPicArray("picsToDownload");
+
+  console.log("!!!!!PIC ARRAY!!!!!");
+  console.log(downloadPicArray);
+
+  console.log("DOWNLOADING PICS");
+
+  //run download pics
+  await downloadPicsFS(downloadPicArray);
+
+  console.log("FINISHED DOWNLOADING, NOW UPLOADING");
+
+  //get pic array for uploading here
+  const uploadPicArray = await getPicArray("picsToUpload");
+
+  console.log("UPLOAD PIC ARRAY");
+
+  //build upload obj
+  const uploadObj = {
+    picArray: uploadPicArray,
+    postToId: CONFIG.articleSendToId,
+  };
+
+  console.log(uploadObj);
+
+  //run upload pics
+  await uploadPicsFS(uploadObj);
+
+  console.log("FINISHED UPLOADING PICS");
+
+  return newPicUrls;
+};
+
 export const scrapePicsClick = async (inputParams) => {
   const { scrapeType, howMany, scrapeTo, tgId, pullNewData } = inputParams;
 

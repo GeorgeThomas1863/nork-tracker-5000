@@ -2,8 +2,7 @@ import CONFIG from "../config/scrape-config.js";
 import { getArticlesAuto } from "./articles/articles-get.js";
 import { postArticlesAuto } from "./articles/articles-post.js";
 import { scrapeArticlesClick } from "./articles/scrape-articles.js";
-import { scrapePicsClick } from "./pics/scrape-pics.js";
-import { scrapePicsAuto } from "./pics/pics-main.js";
+import { scrapePicsClick, scrapePicsAuto } from "./pics/scrape-pics.js";
 
 export const parseCommand = async (req, res) => {
   const inputParams = await setInputParamsDefaults(req.body);
@@ -76,7 +75,7 @@ export const runRestartAutoScraper = async (inputParams) => {
   await getArticlesAuto();
   console.log("FINISHED GETTING PICS");
   await postArticlesAuto();
-  console.log("FINISHD POSTING PICS");
+  console.log("FINISHED POSTING PICS");
   await scrapePicsAuto();
   console.log("FINISHED FUCKER");
 
