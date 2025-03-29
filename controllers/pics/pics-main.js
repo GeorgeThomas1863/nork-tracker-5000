@@ -26,7 +26,7 @@ export const scrapePicsAuto = async () => {
   //run download pics
   await downloadPicsFS(downloadPicArray);
 
-  console.log("UPLOADING PICS");
+  console.log("FINISHED DOWNLOADING, NOW UPLOADING");
 
   //get pic array for uploading here
   const uploadPicArray = await getPicArray("picsToUpload");

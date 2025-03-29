@@ -68,15 +68,15 @@ class KCNA {
       const totalSize = parseInt(res.headers["content-length"], 10);      
       let downloadedSize = 0;
 
-      console.log("DOWNLOADING PIC")
+      console.log("DOWNLOADING PIC " + totalSize + "B")
       console.log(totalSize)
 
       //download shit
       res.data.on("data", (chunk) => {
         downloadedSize += chunk.length;
         if (downloadedSize >= totalSize) {
-          console.log("All data chunks downloaded.");
-          console.log(picURL);
+          // console.log("All data chunks downloaded.");
+          // console.log(picURL);
         }
       });
 
