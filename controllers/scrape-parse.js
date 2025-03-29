@@ -74,6 +74,9 @@ export const runRestartAutoScraper = async (inputParams) => {
 
   //HAVE IT RESTART HOURLY SCRAPER, JUST GETTING NEW DATA FOR TESTING
   await getArticlesAuto();
+  console.log("FINISHED GETTING PICS");
+  await postArticlesAuto();
+  console.log("FINISHD POSTING PICS");
   await scrapePicsAuto();
   console.log("FINISHED FUCKER");
 
