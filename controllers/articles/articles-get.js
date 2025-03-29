@@ -30,6 +30,8 @@ export const getArticlesAuto = async () => {
   const articleObjArray = await getArticleObj(articleArray);
   console.log(articleObjArray);
 
+  console.log("FINISHED GETTING NEW ARTICLES")
+
   return articleArray;
 };
 
@@ -73,12 +75,6 @@ export const getArticleObj = async (inputArray) => {
       //LOOK FOR FUCKING PICS HERE
       if (articleObj && articleObj.picURL) {
         const articlePicArray = await getArticlePics(articleObj.picURL);
-        //!!!REMOVE a bunch of debugging shit from claude
-        console.log("Article pic array type:", typeof articlePicArray);
-        console.log("Is array:", Array.isArray(articlePicArray));
-        console.log("First element type:", articlePicArray.length > 0 ? typeof articlePicArray[0] : "N/A");
-        console.log("First element is array:", articlePicArray.length > 0 ? Array.isArray(articlePicArray[0]) : "N/A");
-        //!!! REMOVE ABOVE
 
         //if check prob not necessary
         if (articlePicArray) {
