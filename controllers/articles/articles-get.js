@@ -26,16 +26,16 @@ export const getArticlesAuto = async () => {
   const storeArticleData = await storeArticleArray(articleArray);
   console.log(storeArticleData);
 
-  //get data for each article by looping through array
-  const articleObjArray = await getArticleObjArray(articleArray);
+  //get data for each article by looping through array, return for tracking
+  const articleObjArray = await getArticleObj(articleArray);
+  console.log(articleObjArray);
 
   console.log("AHHHHHHHHHH");
   console.log("!!!! GOT ARTICLE OBJ ARRAY!!!!!");
-  console.log(articleObjArray);
 
   // console.log(articleData);
-  const storeArticle = await storeArticleObj(articleObjArray);
-  console.log(storeArticle);
+  // const storeArticle = await storeArticleObj(articleObjArray);
+  // console.log(storeArticle);
 
   return articleArray;
 };
@@ -55,7 +55,7 @@ export const getArticleListHtml = async () => {
 };
 
 //returns ARRAY of objs
-export const getArticleObjArray = async (inputArray) => {
+export const getArticleObj = async (inputArray) => {
   //return an array
   const articleObjArray = [];
   for (let i = 0; i < inputArray.length; i++) {
@@ -93,11 +93,16 @@ export const getArticleObjArray = async (inputArray) => {
         }
       }
 
+      //STORE DATA for EACH obj here
+      const storeModel = new dbModel(articleObj, CONFIG.articleContentCollection);
+      const storeData = await storeModel.storeUniqueURL();
+      console.log(storeData);
+
       //add obj to array
       articleObjArray.push(articleObj);
     } catch (e) {
       console.log(e.url + "; " + e.message + "; F BREAK: " + e.function);
-      continue; //if error move on to next link
+      continue; //if error move on to next kcna link
     }
   }
 
