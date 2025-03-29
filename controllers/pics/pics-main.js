@@ -6,10 +6,15 @@ import { getPicArray, getDateArray, getCurrentKcnaId } from "./pics-util.js";
 import { uploadPicsTG, editCaptionTG } from "../tg-api.js";
 
 export const scrapePicsAuto = async () => {
-  console.log("DOWNLOADING NEW PICS");
+  console.log("ON DOWNLOADING NEW PICS");
 
   const newPicUrls = await getPicURLs();
+  console.log("LIST OF NEW PICS");
   console.log(newPicUrls);
+  console.log(newPicUrls.length);
+
+  //exit if no new pics to download
+  if (newPicUrls.length === 0) return;
 
   //GET PIC ARRAY for downloading here (specifying type in arg)
   const downloadPicArray = await getPicArray("picsToDownload");
