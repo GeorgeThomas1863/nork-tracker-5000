@@ -65,15 +65,18 @@ class KCNA {
 
       const writer = fs.createWriteStream(savePath);
       const stream = res.data.pipe(writer);
-      const totalSize = parseInt(res.headers["content-length"], 10);
+      const totalSize = parseInt(res.headers["content-length"], 10);      
       let downloadedSize = 0;
+
+      console.log("DOWNLOADING PIC")
+      console.log(totalSize)
 
       //download shit
       res.data.on("data", (chunk) => {
         downloadedSize += chunk.length;
         if (downloadedSize >= totalSize) {
-          // console.log("All data chunks downloaded.");
-          // console.log(picUrl);
+          console.log("All data chunks downloaded.");
+          console.log(picURL);
         }
       });
 
