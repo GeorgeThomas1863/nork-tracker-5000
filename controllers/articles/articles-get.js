@@ -135,19 +135,20 @@ export const getArticlePics = async (picURL) => {
 
   // Use a for loop to extract the src attributes
   for (let i = 0; i < imgElements.length; i++) {
-    const imgSrc = imgElements[i].getAttribute("src");
-    if (imgSrc) {
-      //extract out final number for pic file name
-      const picPathNum = imgSrc.substring(imgSrc.length - 11, imgSrc.length - 4);
-      const picPathEnd = String(Number(picPathNum));
+    const imgItem = imgElements[i];
+    if (!imgItem) continue;
+    const imgSrc = imgItem.getAttribute("src");
+    if (!imgSrc) continue;
+    //extract out final number for pic file name
+    const picPathNum = imgSrc.substring(imgSrc.length - 11, imgSrc.length - 4);
+    const picPathEnd = String(Number(picPathNum));
 
-      const picObj = {
-        url: "http://www.kcna.kp" + imgSrc,
-        picPath: CONFIG.savePicPathBase + picPathEnd + ".jpg",
-      };
+    const picObj = {
+      url: "http://www.kcna.kp" + imgSrc,
+      picPath: CONFIG.savePicPathBase + picPathEnd + ".jpg",
+    };
 
-      articlePicArray.push(picObj);
-    }
+    articlePicArray.push(picObj);
   }
 
   //download pics (if they havent been already)
