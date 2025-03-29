@@ -8,11 +8,14 @@ export const getDateArray = async () => {
 
   for (let i = -1; i < 2; i++) {
     const date = new Date(currentDate);
+    const currentMonth = date.getMonth();
+    //plus 1 needed bc month 0 indexed
+    const monthRaw = currentMonth + i + 1;
 
-    date.setMonth(currentDate.getMonth() + i);
+    // date.setMonth(currentDate.getMonth() + i);
 
     // Get month (0-11) and add 1 to get 1-12 range
-    const monthRaw = date.getMonth() + 1;
+    // const monthRaw = date.getMonth() + 1;
 
     console.log(monthRaw);
 
