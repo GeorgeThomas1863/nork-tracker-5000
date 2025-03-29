@@ -73,13 +73,18 @@ export const runRestartAutoScraper = async (inputParams) => {
   //MAKE WAY TO HANDLE SETTING TG ID
 
   //HAVE IT RESTART HOURLY SCRAPER, JUST GETTING NEW DATA FOR TESTING
-  const autoObj = { ...inputParams }; //destructure input
-  autoObj.scrapeType = "scrapeBoth";
-  autoObj.pullNewData = "yesNewData"; //turn on dumbass
-
-  const data = await runGetNewData(autoObj);
-  console.log(data);
+  await getArticlesAuto();
+  await scrapePicsAuto();
   console.log("FINISHED FUCKER");
+
+  //long ass way to do it below
+  // const autoObj = { ...inputParams }; //destructure input
+  // autoObj.scrapeType = "scrapeBoth";
+  // autoObj.pullNewData = "yesNewData"; //turn on dumbass
+
+  // const data = await runGetNewData(autoObj);
+  // console.log(data);
+  // console.log("FINISHED FUCKER");
 
   return data;
 };
