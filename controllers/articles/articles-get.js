@@ -81,7 +81,17 @@ export const getArticleObjArray = async (inputArray) => {
       //LOOK FOR FUCKING PICS HERE
       if (articleObj && articleObj.picURL) {
         const articlePicArray = await getArticlePics(articleObj.picURL);
-        articleObj.articlePicArray = articlePicArray;
+        //!!!REMOVE a bunch of debugging shit from claude
+        console.log("Article pic array type:", typeof articlePicArray);
+        console.log("Is array:", Array.isArray(articlePicArray));
+        console.log("First element type:", articlePicArray.length > 0 ? typeof articlePicArray[0] : "N/A");
+        console.log("First element is array:", articlePicArray.length > 0 ? Array.isArray(articlePicArray[0]) : "N/A");
+        //!!! REMOVE ABOVE
+
+        //if check prob not necessary
+        if (articlePicArray) {
+          articleObj.articlePicArray = articlePicArray;
+        }
       }
 
       //add obj to array
@@ -141,12 +151,14 @@ export const getArticlePics = async (picURL) => {
     if (!imgSrc) continue;
     //extract out final number for pic file name
     const picPathNum = imgSrc.substring(imgSrc.length - 11, imgSrc.length - 4);
+    if (!picPathNum) continue;
     const picPathEnd = String(Number(picPathNum));
 
     const picObj = {
       url: "http://www.kcna.kp" + imgSrc,
       picPath: CONFIG.savePicPathBase + picPathEnd + ".jpg",
     };
+    if (!picObj) continue;
 
     articlePicArray.push(picObj);
   }
