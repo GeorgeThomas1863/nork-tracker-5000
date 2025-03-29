@@ -29,13 +29,13 @@ export const getArticlesAuto = async () => {
   console.log(storeArticleData);
 
   //get data for each article by looping through array
-  const articleDataArray = await getArticleData(articleArray);
+  const articleObjArray = await getArticleObjArray(articleArray);
 
-  console.log("!!!! GOT ARTICLE DATA ARRAY!!!!!");
-  console.log(articleDataArray);
+  console.log("!!!! GOT ARTICLE OBJ ARRAY!!!!!");
+  console.log(articleObjArray);
 
   // console.log(articleData);
-  const storeArticle = await storeArticleObj(articleDataArray);
+  const storeArticle = await storeArticleObj(articleObjArray);
   console.log(storeArticle);
 
   return articleArray;
@@ -56,7 +56,7 @@ export const getArticleListHtml = async () => {
 };
 
 //returns ARRAY of objs
-export const getArticleData = async (inputArray) => {
+export const getArticleObjArray = async (inputArray) => {
   //return an array
   const articleObjArray = [];
   for (let i = 0; i < inputArray.length; i++) {
@@ -73,6 +73,10 @@ export const getArticleData = async (inputArray) => {
       const articleObj = await parseArticleHtml(articleHtml);
       articleObj.url = article; //add url to object
       articleObj.myId = inputObj.myId; //add myId to article Obj
+
+      console.log("!!!IN getArticleObjArray");
+      console.log(i);
+      console.log(articleObj);
 
       //LOOK FOR FUCKING PICS HERE
       if (articleObj && articleObj.picURL) {
