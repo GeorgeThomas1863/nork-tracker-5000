@@ -30,13 +30,6 @@ export const getArticlesAuto = async () => {
   const articleObjArray = await getArticleObj(articleArray);
   console.log(articleObjArray);
 
-  console.log("AHHHHHHHHHH");
-  console.log("!!!! GOT ARTICLE OBJ ARRAY!!!!!");
-
-  // console.log(articleData);
-  // const storeArticle = await storeArticleObj(articleObjArray);
-  // console.log(storeArticle);
-
   return articleArray;
 };
 

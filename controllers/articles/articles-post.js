@@ -12,6 +12,10 @@ export const postArticlesAuto = async (postToId = CONFIG.articleSendToId) => {
 
   const articleModel = new dbModel(articleObj, "");
   const articleArray = await articleModel.findNewURLs();
+
+  console.log("NOW POSTING NEW ARTICLES. NEW ARTICLE LIST:");
+  console.log(articleArray);
+
   // console.log(articleArray);
   if (articleArray.length === 0) return null; //no new articles to post
 
@@ -35,6 +39,8 @@ export const postArticlesAuto = async (postToId = CONFIG.articleSendToId) => {
       continue;
     }
   }
+
+  console.log("FINISHED POSTING " + articleArray.length + " NEW ARTICLES")
   return articleArray.length;
 };
 

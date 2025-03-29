@@ -6,16 +6,21 @@ import { getPicArray, getDateArray, getCurrentKcnaId } from "./pics-util.js";
 import { uploadPicsTG, editCaptionTG } from "../tg-api.js";
 
 export const scrapePicsAuto = async () => {
+  console.log("DOWNLOADING NEW PICS");
+
   const newPicUrls = await getPicURLs();
-  // console.log(newPicUrls);
+  console.log(newPicUrls);
 
   //GET PIC ARRAY for downloading here (specifying type in arg)
   const downloadPicArray = await getPicArray("picsToDownload");
   // console.log(downloadPicArray);
 
+  console.log("DOWNLOADING PICS");
+
   //run download pics
-  const downloadPics = await downloadPicsFS(downloadPicArray);
-  // console.log(downloadPics);
+  await downloadPicsFS(downloadPicArray);
+
+  console.log("UPLOADING PICS");
 
   //get pic array for uploading here
   const uploadPicArray = await getPicArray("picsToUpload");
@@ -26,9 +31,12 @@ export const scrapePicsAuto = async () => {
     postToId: CONFIG.articleSendToId,
   };
 
+  console.log(uploadObj);
+
   //run upload pics
-  const uploadPics = await uploadPicsFS(uploadObj);
-  // console.log(uploadPics);
+  await uploadPicsFS(uploadObj);
+
+  console.log("FINISHED UPLOADING PICS")
 
   return newPicUrls;
 };
@@ -110,10 +118,12 @@ export const downloadPicsFS = async (picArray) => {
         savePath: pic.picPath,
       };
 
+      console.log(downloadPicParams);
+
       //download pic
       const downloadPicModel = new KCNA(downloadPicParams);
       const downloadPicData = await downloadPicModel.downloadPicFS();
-      // console.log(downloadPicData);
+      console.log(downloadPicData);
 
       //store pic was downloaded
       const storePicModel = new dbModel(pic, CONFIG.downloadedCollection);
@@ -135,6 +145,8 @@ export const uploadPicsFS = async (uploadObj) => {
         chatId: postToId,
         picPath: pic.picPath,
       };
+
+      console.log(params);
 
       //upload pic
       const uploadPicData = await uploadPicsTG(params);

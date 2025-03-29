@@ -78,6 +78,9 @@ export const runRestartAutoScraper = async (inputParams) => {
   autoObj.pullNewData = "yesNewData"; //turn on dumbass
 
   const data = await runGetNewData(autoObj);
+  console.log(data);
+  console.log("FINISHED FUCKER");
+
   return data;
 };
 
@@ -91,21 +94,24 @@ export const runGetNewData = async (inputParams) => {
     case "scrapeArticles":
       await getArticlesAuto();
       await postArticlesAuto();
+      console.log("FINISHED SCRAPING ARTICLES");
       break;
 
     case "scrapePics":
       await scrapePicsAuto();
+      console.log("FINISHED SCRAPING PICS");
       break;
 
     case "scrapeBoth":
       await getArticlesAuto();
       await postArticlesAuto();
       await scrapePicsAuto();
+      console.log("FINISHED SCRAPING ARTICLES AND PICS");
       break;
   }
 
   console.log("FINISHED GETTING NEW DATA");
-  return;
+  return true;
 };
 
 export const runScrapeURL = async () => {
