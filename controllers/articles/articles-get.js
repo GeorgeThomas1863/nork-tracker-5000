@@ -149,14 +149,17 @@ export const getArticlePics = async (picURL) => {
     if (!imgItem) continue;
     const imgSrc = imgItem.getAttribute("src");
     if (!imgSrc) continue;
-    //extract out final number for pic file name
+
+    //extract out kcnaId / other things for file name
     const picPathNum = imgSrc.substring(imgSrc.length - 11, imgSrc.length - 4);
     if (!picPathNum) continue;
-    const picPathEnd = String(Number(picPathNum));
+    const kcnaId = String(Number(picPathNum));
 
     const picObj = {
       url: "http://www.kcna.kp" + imgSrc,
-      picPath: CONFIG.savePicPathBase + picPathEnd + ".jpg",
+      picPath: CONFIG.savePicPathBase + kcnaId + ".jpg",
+      kcnaId: +kcnaId,
+      //ADD dateString (extrac from  from fucking URL)
     };
     if (!picObj) continue;
 
@@ -164,7 +167,13 @@ export const getArticlePics = async (picURL) => {
   }
 
   //download pics (if they havent been already)
-  await downloadPicsFS(articlePicArray);
+  //!!!!!!FIX HERE, PIC SHOULDNT BE DOWNLOADING
+  //loop through the article pic array and see if any are new?? if they are store them to pics for LATER downloading???
+  for (let k = 0; k < articlePicArray.length; k++) {
+    const storePicObj = articlePicArray[k];
+    const dataModel = new dbModel(storePicObj, CONFIG.picCollection);
+    const storePicData = await dataModel.storeUniqueURL();
+  }
 
   return articlePicArray;
 };
