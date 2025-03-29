@@ -19,19 +19,19 @@ export const getArticlesAuto = async () => {
   //parse out an array of articles
   const articleArray = await parseArticleList(articleListHtml);
 
-  console.log("AHHHHHHHHHHHHH");
-  console.log(articleArray);
+  console.log("GOT ARTICLE ARRAY");
 
   //no new articles
   if (articleArray.length === 0) return null;
 
   //otherwise store articles and get article data
-  await storeArticleArray(articleArray);
-  console.log(storeData);
+  const storeArticleData = await storeArticleArray(articleArray);
+  console.log(storeArticleData);
 
   //get data for each article by looping through array
   const articleDataArray = await getArticleData(articleArray);
-  console.log("ARTICLE DATA ARRAY");
+
+  console.log("!!!! GOT ARTICLE DATA ARRAY!!!!!");
   console.log(articleDataArray);
 
   // console.log(articleData);

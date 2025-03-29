@@ -10,6 +10,7 @@ export const storeArticleArray = async (inputArray) => {
     const storeURL = await storeModel.storeUniqueURL();
     // console.log(storeURL);
   }
+  return true;
 };
 
 //stores article obj (from single article)
@@ -21,6 +22,8 @@ export const storeArticleObj = async (inputData) => {
   } catch (e) {
     console.log(e.url + "; " + e.message + "; F BREAK: " + e.function);
   }
+
+  return true
 };
 
 //LOG article lookups //CAN TURN OFF
