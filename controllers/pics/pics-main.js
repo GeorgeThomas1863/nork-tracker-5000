@@ -53,8 +53,8 @@ export const getPicURLs = async () => {
   const dateArray = await getDateArray();
   const currentKcnaId = await getCurrentKcnaId();
 
-  // console.log("HERE CURRENT KCNA ID");
-  // console.log(currentKcnaId);
+  console.log("HERE CURRENT KCNA ID");
+  console.log(currentKcnaId);
 
   //loop 200 (400 lookups an hour)
   const startId = currentKcnaId - 100;
@@ -69,7 +69,8 @@ export const getPicURLs = async () => {
       try {
         const dateString = dateArray[arrayIndex];
         const url = CONFIG.picBaseURL + dateString + "/PIC00" + i + ".jpg";
-        // console.log(url);
+        console.log(url);
+
         const urlObj = {
           url: url,
         };
