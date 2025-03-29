@@ -19,6 +19,9 @@ export const postArticlesAuto = async (postToId = CONFIG.articleSendToId) => {
   // console.log(articleArray);
   if (articleArray.length === 0) return null; //no new articles to post
 
+  //sort the article array //UNSURE IF WORKS
+  articleArray.sort((a, b) => a.myId - b.myId);
+
   //loop through ARTICLE array
   for (let i = 0; i < articleArray.length; i++) {
     try {
@@ -40,7 +43,7 @@ export const postArticlesAuto = async (postToId = CONFIG.articleSendToId) => {
     }
   }
 
-  console.log("FINISHED POSTING " + articleArray.length + " NEW ARTICLES")
+  console.log("FINISHED POSTING " + articleArray.length + " NEW ARTICLES");
   return articleArray.length;
 };
 

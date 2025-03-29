@@ -148,6 +148,9 @@ export const downloadPicsFS = async (picArray) => {
 export const uploadPicsFS = async (uploadObj) => {
   const { picArray, postToId } = uploadObj;
 
+  //sort the array //UNSURE IF WORKS
+  picArray.sort((a, b) => a.kcnaId - b.kcnaId);
+
   for (let i = 0; i < picArray.length; i++) {
     try {
       const pic = picArray[i];
