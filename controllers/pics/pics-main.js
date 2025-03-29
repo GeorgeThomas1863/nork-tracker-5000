@@ -13,7 +13,9 @@ export const scrapePicsAuto = async () => {
 
   //GET PIC ARRAY for downloading here (specifying type in arg)
   const downloadPicArray = await getPicArray("picsToDownload");
-  // console.log(downloadPicArray);
+
+  console.log("!!!!!PIC ARRAY!!!!!");
+  console.log(downloadPicArray);
 
   console.log("DOWNLOADING PICS");
 
@@ -36,7 +38,7 @@ export const scrapePicsAuto = async () => {
   //run upload pics
   await uploadPicsFS(uploadObj);
 
-  console.log("FINISHED UPLOADING PICS")
+  console.log("FINISHED UPLOADING PICS");
 
   return newPicUrls;
 };
