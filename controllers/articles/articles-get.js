@@ -145,34 +145,38 @@ export const getArticlePics = async (picURL) => {
 
   // Use a for loop to extract the src attributes
   for (let i = 0; i < imgElements.length; i++) {
-    const imgItem = imgElements[i];
-    if (!imgItem) continue;
-    const imgSrc = imgItem.getAttribute("src");
-    if (!imgSrc) continue;
+    try {
+      const imgItem = imgElements[i];
 
-    //extract out kcnaId / other things for file name
-    const picPathNum = imgSrc.substring(imgSrc.length - 11, imgSrc.length - 4);
-    if (!picPathNum) continue;
-    const kcnaId = String(Number(picPathNum));
+      //skip if no image src (some other img on page)
+      if (!imgItem || !imgItem.getAttribute("src")) continue;
+      const imgSrc = imgItem.getAttribute("src");
 
-    const picObj = {
-      url: "http://www.kcna.kp" + imgSrc,
-      picPath: CONFIG.savePicPathBase + kcnaId + ".jpg",
-      kcnaId: +kcnaId,
-      //ADD dateString (extrac from  from fucking URL)
-    };
-    if (!picObj) continue;
+      //extract out kcnaId for file name
+      const picPathNum = imgSrc.substring(imgSrc.length - 11, imgSrc.length - 4);
+      if (!picPathNum) continue;
+      const kcnaId = String(Number(picPathNum));
+      //extract out stupid date string
+      const dateString = imgSrc.substring(imgSrc.indexOf("/photo/") + "/photo/".length, imgSrc.indexOf("/PIC", imgSrc.indexOf("/photo/")));
 
-    articlePicArray.push(picObj);
-  }
+      const picObj = {
+        url: "http://www.kcna.kp" + imgSrc,
+        picPath: CONFIG.savePicPathBase + kcnaId + ".jpg",
+        kcnaId: +kcnaId,
+        dateString: dateString,
+      };
+      if (!picObj) continue;
 
-  //download pics (if they havent been already)
-  //!!!!!!FIX HERE, PIC SHOULDNT BE DOWNLOADING
-  //loop through the article pic array and see if any are new?? if they are store them to pics for LATER downloading???
-  for (let k = 0; k < articlePicArray.length; k++) {
-    const storePicObj = articlePicArray[k];
-    const dataModel = new dbModel(storePicObj, CONFIG.picCollection);
-    const storePicData = await dataModel.storeUniqueURL();
+      //push all to array
+      articlePicArray.push(picObj);
+
+      //store pics if any new for LATER downloading
+      const dataModel = new dbModel(picObj, CONFIG.picCollection);
+      const storePicData = await dataModel.storeUniqueURL();
+      console.log(storePicData);
+    } catch (e) {
+      console.log(e.message + "; URL: " + e.url + "; BREAK: " + e.function);
+    }
   }
 
   return articlePicArray;
