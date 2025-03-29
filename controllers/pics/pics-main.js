@@ -11,10 +11,9 @@ export const scrapePicsAuto = async () => {
   const newPicUrls = await getPicURLs();
   console.log("LIST OF NEW PICS");
   console.log(newPicUrls);
-  console.log(newPicUrls.length);
 
   //exit if no new pics to download
-  if (newPicUrls.length === 0) return;
+  if (!newPicUrls || newPicUrls.length === 0) return;
 
   //GET PIC ARRAY for downloading here (specifying type in arg)
   const downloadPicArray = await getPicArray("picsToDownload");
@@ -49,6 +48,8 @@ export const scrapePicsAuto = async () => {
 };
 
 export const getPicURLs = async () => {
+  const newPicArray = [];
+
   //get date array
   const dateArray = await getDateArray();
   const currentKcnaId = await getCurrentKcnaId();
@@ -101,9 +102,10 @@ export const getPicURLs = async () => {
         };
 
         const dataModel = new dbModel(storeParams, CONFIG.picCollection);
-        const storePicData = await dataModel.storeUniqueURL();
-        // console.log(storeParams);
-        // console.log(storePicData);
+        await dataModel.storeUniqueURL();
+
+        //if successfully stored (and therefore is unique) add to array for tracking
+        newPicArray.push(storeParams);
         break;
       } catch (e) {
         console.log(e.message + "; URL: " + e.url + "; BREAK: " + e.function);
@@ -111,7 +113,7 @@ export const getPicURLs = async () => {
       }
     }
   }
-  return true;
+  return newPicArray;
 };
 
 //ACCEPTS ARRAY OF OBJECTS
